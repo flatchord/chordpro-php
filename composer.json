@@ -1,5 +1,5 @@
 {
-    "name": "nicolaswurtz/chordpro-php",
+    "name": "flatchord/chordpro-php",
     "description": "Parse, transpose and format (html,json,plaintext) ChordPro format for songs lyrics with chords.",
     "type": "library",
     "require-dev": {
@@ -15,6 +15,10 @@
         {
             "name": "Nicolas Wurtz",
             "email": "git@nethenic.net"
+        },
+        {
+            "name": "Leonardo Oberle",
+            "email": "leocello@gmail.com"
         }
     ],
     "require": {}
