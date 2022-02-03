@@ -6,6 +6,8 @@ class JSONFormatter extends Formatter implements FormatterInterface {
 
     public function format(Song $song, array $options): string
     {
+        $json = [];
+
         $this->setOptions($song,$options);
 
         foreach ($song->lines as $line) {
@@ -58,10 +60,13 @@ class JSONFormatter extends Formatter implements FormatterInterface {
     }
     private function getLyricsOnlyJSON($lyrics)
     {
+        $return = '';
+
         foreach ($lyrics->getBlocks() as $block) {
             $return .= ltrim($block->getText());
         }
         return $return;
     }
 }
+
 
