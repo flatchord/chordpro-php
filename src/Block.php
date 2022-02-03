@@ -3,62 +3,86 @@
 namespace ChordPro;
 
 class Block {
-    private $chord;
-    private $text;
 
-    private $french_chords = array(
+    private string|null $chord;
+
+    private string|null $text;
+
+    private array $frenchChords = [
         'A' => 'La',
         'B' => 'Si',
         'C' => 'Do',
         'D' => 'Ré',
         'E' => 'Mi',
         'F' => 'Fa',
-        'G' => 'Sol'
-    );
+        'G' => 'Sol',
+    ];
 
-    private function englishNotation($chord)
-    {
-        if (in_array(substr(strtolower($chord),0,2),['la','si','do','ré','re','mi','fa','so'])) {
-            return str_replace(['la','si','do','ré','re','mi','fa','sol'],['A','B','C','D','D','E','F','G'],strtolower($chord));
-        }
-        else {
-            return $chord;
-        }
-    }
-
-    public function __construct($chord,$text)
+    public function __construct($chord, $text)
     {
         $this->chord = $chord;
         $this->text = $text;
     }
 
-    // getFrenchChord & getChord return an array (when with fundamental "/"), composed by an array with note, and alteration
-    public function getFrenchChord()
+    private function englishNotation(string $chord): string
     {
-        $chords = explode('/',$this->chord);
-        foreach ($chords as $chord) {
-            $result[] = [$this->french_chords[substr($chord,0,1)],substr($chord,1)];
+        if (!in_array(substr(strtolower($chord),0,2),['la','si','do','ré','re','mi','fa','so'])) {
+            return $chord;
         }
-        return $result;
-    }
-    public function getChord()
-    {
-        if (null !== $this->chord) {
-            $chords = explode('/',$this->englishNotation($this->chord));
-            foreach ($chords as $chord) {
-                $result[] = [substr($chord,0,1),substr($chord,1)];
-            }
-            return $result;
+
+        $frArr = [];
+        $enArr = [];
+
+        foreach ($this->frenchChords as $k => $v) {
+            $frArr[] = strtolower($v);
+            $enArr[] = $k;
         }
+
+        return str_replace($frArr, $enArr, strtolower($chord));
     }
 
-    public function getText()
+    public function getFrenchChord(): array
+    {
+        $chords = explode('/',$this->chord);
+        $result = [];
+
+        foreach ($chords as $chord) {
+            if (strlen($chord) > 0 && isset($this->frenchChords[$chord])) {
+                $result[] = [
+                    $this->frenchChords[substr($chord, 0, 1)],
+                    substr($chord, 1),
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    public function getChord(): array
+    {
+        $result = [];
+
+        if (!is_null($this->chord)) {
+            $chords = explode('/', $this->englishNotation($this->chord));
+
+            foreach ($chords as $chord) {
+                $result[] = [
+                    substr($chord, 0, 1),
+                    substr($chord, 1),
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    public function getText(): string|null
     {
         return $this->text;
     }
 
-    public function setChord($newchord)
+    public function setChord(string $chord)
     {
-        $this->chord = $newchord;
+        $this->chord = $chord;
     }
 }

@@ -27,7 +27,7 @@ class MonospaceFormatter extends Formatter implements FormatterInterface {
         }
 
         if ($line instanceof Lyrics) {
-            return (true === $this->no_chords) ? $this->getLyricsOnlyMonospace($line) : $this->getLyricsMonospace($line);
+            return (true === $this->hasNoChords) ? $this->getLyricsOnlyMonospace($line) : $this->getLyricsMonospace($line);
         }
     }
 
@@ -62,7 +62,7 @@ class MonospaceFormatter extends Formatter implements FormatterInterface {
     private function getLyricsMonospace(Lyrics $lyrics)
     {
         foreach ($lyrics->getBlocks() as $block) {
-            $chord = (true === $this->french_chords) ? $block->getFrenchChord() : $block->getChord();
+            $chord = (true === $this->hasFrenchChords) ? $block->getFrenchChord() : $block->getChord();
             // Implode all !
             $chord = implode('/',array_map("implode",$chord)).' ';
 

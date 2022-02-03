@@ -3,16 +3,17 @@
 namespace ChordPro;
 
 class Formatter {
-    protected $french_chords;
-    protected $no_chords;
+    protected bool $hasFrenchChords = false;
+    protected bool $hasNoChords = false;
 
     public function setOptions(Song $song, array $options)
     {
-        if (isset($options['french']) and true === $options['french']) {
-            $this->french_chords = true;
+        if (isset($options['french']) && $options['french'] === true) {
+            $this->hasFrenchChords = true;
         }
-        if (isset($options['no_chords']) and true === $options['no_chords']) {
-            $this->no_chords = true;
+
+        if (isset($options['no_chords']) && $options['no_chords'] === true) {
+            $this->hasNoChords = true;
         }
     }
 }
