@@ -87,3 +87,4 @@ class MonospaceFormatter extends Formatter implements FormatterInterface {
         return $texts."\n";
     }
 }
+

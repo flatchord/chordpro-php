@@ -64,3 +64,4 @@ class JSONFormatter extends Formatter implements FormatterInterface {
         return $return;
     }
 }
+

@@ -112,3 +112,4 @@ class HtmlFormatter extends Formatter implements FormatterInterface {
         return $verse;
     }
 }
+
